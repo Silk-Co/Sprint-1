@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+</head>
+<body>
+    <h1>Simulador Financeiro SilkCO</h1>
+
+
+    Quantos hectares você tem disponível para a produção das amoreiras? <input type="text" id="inp_hectares"> <br><br>
+    Produção média por hectare(kg de casulos/ano): <input type="text" id="inp_qtdCasulo"><br><br>
+    Preço do kg do casulo (R$): <input type="text" id="inp_precoCasulo"><br><br>
+    Tempo de simulação (ano): <input type="text" id="inp_tempoSimulacao"><br><br>
+
+    <button onclick="but_simulacaoConservadora()">Simulação Conservadora (15%)</button> <!-- 15% perda -->
+    <button onclick="but_simulacaoCritica()">Simulação Crítica (30%)</button>  <!-- 30% perda -->
+
+    <div  id="mensagem"></div>
+
+<Script>
+    function but_simulacaoConservadora(){
+        let hectare = Number(inp_hectares.value);
+        let qtdCasulo = Number(inp_qtdCasulo.value);
+        let tempo = Number(inp_tempoSimulacao.value);
+        let precoCasulo = Number(inp_precoCasulo.value);
+
+        //contas
+        let producaoTotal = qtdCasulo * hectare * tempo
+        let valorBase = producaoTotal * precoCasulo
+        let porcentagem = valorBase * 0.15
+        let valorFinal = valorBase + porcentagem;
+        
+        
+        mensagem.innerHTML = `<br>Produção total: ${producaoTotal} kg de casulos <br>
+        Valor total sem SilkCO: R$ ${valorBase.toFixed(2)} <br><br>
+        <spam style="color: red;">Perda estimada (15%): R$ ${porcentagem.toFixed(2)}</spam> <br>
+        <spam style="color: green;">Valor final com SilkCO: R$ ${valorFinal.toFixed(2)} (${valorBase} + ${porcentagem}) </spam>`
+    };
+
+    function but_simulacaoCritica(){
+        let hectare = Number(inp_hectares.value);
+        let qtdCasulo = Number(inp_qtdCasulo.value);
+        let tempo = Number(inp_tempoSimulacao.value);
+        let precoCasulo = Number(inp_precoCasulo.value);
+
+        //contas
+        let producaoTotal = qtdCasulo * hectare * tempo // pega a quantidade de casulos por hectare/ano e multiplica pelos dois para ter a produção total do barracão (pesquisar as medias)
+        let valorBase = producaoTotal * precoCasulo // produção total e ve o quanto rendera vendendo no seu preço(pesquisar a media)
+        let porcentagem = valorBase * 0.30 // ve a porcentagem de lucro/perda em uma situação crítica/conservadora
+        let valorFinal = valorBase + porcentagem; // soma o valor base das vendas com a porcentagem de lucro com a SlikCO
+        
+        mensagem.innerHTML = `<br>Produção total: ${producaoTotal} kg de casulos <br>
+        Valor total sem SilkCO: R$ ${valorBase.toFixed(2)} <br><br>
+        <spam style="color: red;">Perda estimada (30%): R$ ${porcentagem.toFixed(2)}</spam> <br>
+        <spam style="color: green;">Valor final com SilkCO: R$ ${valorFinal.toFixed(2)} (${valorBase} + ${porcentagem}) </spam>`
+    };
+
+
+    //A empresa Bratac trabalha com aproximadamente 1.700 a 2.300 produtores integrados. Considerando uma produção média anual de 1.200 a 2.500 kg de casulos por produtor, a cadeia produtiva pode gerar entre 2 e 5,7 milhões de kg de casulos por ano. Caso ocorram perdas de 15% a 30% devido a variações de temperatura e umidade, o prejuízo pode variar entre R$6 milhões e R$34 milhões anuais, evidenciando a importância do monitoramento ambiental na produção.
+</Script>
+
+</html>
