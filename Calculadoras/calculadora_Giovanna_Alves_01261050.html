@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Quantidade de ovos comprados por safra(g) <input type="text" id="inp_grama"><br><br>
+    Valor do casulo por Kg <input type="text" id="inp_valor">
+
+    <button onclick="simular()">Simular</button><br><br>
+
+    <div id="div_mensagem"></div> 
+</body>
+</html>
+<script>
+
+    function simular(){
+
+        let gramaAnual = Number(inp_grama.value) * 9;
+
+        let valorCasulo = Number(inp_valor.value);
+
+        let casuloPorGrama = gramaAnual * 1500; // quantos casulos tem por g de ovos (1g de ovo  = 1500) - Departamento de Entomologia -UFLA
+
+        let kgCasulo = casuloPorGrama / 500; // quilos de casulos produzidos (1kg de casulos = 500 casulos) - wildfibres.co.uk
+        
+        let prejuizoGeral = kgCasulo * 0.40; // casulos perdidos no geral (40%) - International Journal of Advanced Biochemistry Research 2025
+        
+        let prejuizoEspecifico = prejuizoGeral * 0.70; // casulos perdidos por doenças (70% de 40%) - International Journal of Advanced Biochemistry Research 2025
+        
+        let totalAnual = (kgCasulo-prejuizoGeral) * valorCasulo; // valor dos casulos restantes 
+        
+        let totalAnualSilk = (kgCasulo - (prejuizoGeral - prejuizoEspecifico)) * valorCasulo; // valor com sensor
+        
+        let diferença = totalAnualSilk - totalAnual;
+
+
+        div_mensagem.innerHTML = `Com o preço do quilo do casulo em R$${valorCasulo}, atualmente seu lucro por safra 
+        é em média R$${totalAnual/9} totalizando <b>R$${totalAnual}</b> por ano. <br><br>
+
+        Com um bom uso do sensor da Silk Co. unificado com ferramentas de controle de temperatura 
+        e umidade seu negócio poderá ter um lucro anual de até <b>R$${totalAnualSilk}</b>! <br><br>
+        
+        <b>Um aumento de R$${diferença} por ano e R$${diferença/9} por safra!</b>`   
+    }
+</script>
