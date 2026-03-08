@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- Título da pagina -->
+    <h1>Simulador Financeiro SilkCo</h1>
+
+
+    <!-- Campos que o usuario preenche -->
+    Quantidade de casulos produzidos (kg/ano): <input type="number" id="input_casulos"><br><br>
+    Preco do kg do casulo (R$): <input type="number" id="input_preco"><br><br>
+    Anos de simulação: <input type="number" id="input_anos"><br><br>
+    Custo anual do sistema SilkCo (R$): <input type="number" id="input_custo"><br><br>
+
+
+    <!-- Botao que chama a função calcular() -->
+  <button onclick="calcular()">Calcular Desconto com a SilkCo</button>
+
+  <!-- Div onde o resultado vai aparecer depois de clicar no botao -->
+  <div id="div_mensagem"></div>
+
+</body>
+</html>
+<script>
+    function calcular() {
+
+    // Lê os valores digitados pelo usuário e converte para número
+    let casulos = Number(input_casulos.value);
+    let preco   = Number(input_preco.value);
+    let anos    = Number(input_anos.value);
+    let custo   = Number(input_custo.value);
+
+    // Cálculos 
+    let producaoTotal = casulos * anos;  // Calcula a produção total no período informado
+
+    let receitaTotal = producaoTotal * preco; // Calcula a receita total, sem nenhuma perda
+
+    let perdaConservadora = receitaTotal * 0.15; // Calcula 15% de perda sem monitoramento
+
+    let perdaCritica = receitaTotal * 0.30; // Calcula 30% de perda sem monitoramento
+
+    let custoTotal = custo * anos; // Calcula o custo total do sistema SilkCo no período
+
+    let receitaComSilkCo = receitaTotal - custoTotal; // Calcula a receita com a SilkCo (receita total menos o custo do sistema)
+
+    let ganhoConservador = receitaComSilkCo - (receitaTotal - perdaConservadora); // Calcula o ganho líquido comparando com a SilkCo no cenário conservador
+
+    let ganhoCritico = receitaComSilkCo - (receitaTotal - perdaCritica); // Calcula o ganho líquido comparando com a SilkCo no cenário critico
+
+    // Mensagem que irá aparecer após os cálculos
+    div_mensagem.innerHTML = `
+      <br>
+      <b>--- Producão ---</b><br>
+      Produção total ${anos} ano(s): ${producaoTotal} kg de casulos<br>
+      Receita total: R$ ${receitaTotal.toFixed(2)}<br><br>
+      <b>--- Sem a SilkCo ---</b><br>
+      <span style="color:red">Perda conservadora (15%): R$ ${perdaConservadora.toFixed(2)}</span><br>
+      <span style="color:red">Perda crítica (30%): R$ ${perdaCritica.toFixed(2)}</span><br><br>
+      <b>--- Com a SilkCo ---</b><br>
+      Custo do sistema ${anos} ano(s): R$ ${custoTotal.toFixed(2)}<br>
+      <span style="color:green">Receita com a SilkCo: R$ ${receitaComSilkCo.toFixed(2)}</span><br><br>
+      <b>--- Ganho com a SilkCo ---</b><br>
+      <span style="color:green">Cenário conservador: você ganha R$ ${ganhoConservador.toFixed(2)} a mais</span><br>
+      <span style="color:green">Cenário crítico: você ganha R$ ${ganhoCritico.toFixed(2)} a mais</span><br>
+    `
+  }
+</script>
