@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Simulador Financeiro</h1>
+    Insira quantos quilos produz por hectar (ano): <input type="text" id="ipt_kg"> <br><br>
+    Insira quantos hectares: <input type="text" id="ipt_hectares"> <br><br>
+    Insira o valor do quilo da seda: <input type="text"  id="ipt_valorKg"> <br><br>
+    Insira valor da perda na produção anual (em kg): <input type="text" id="ipt_perda"> <br><br>
+    Simular com SilkCo? (sim ou não) <input type="text" id="ipt_silkCo"> <br><br>
+
+    <button onclick="simular()"><b>Simular</b></button>
+
+    <div id="div_msg"></div>
+
+</body>
+</html>
+<script>
+    function simular(){
+        let kg = Number(ipt_kg.value) 
+        let hectares = Number(ipt_hectares.value)
+        let valorKg = Number(ipt_valorKg.value)
+        let perda = Number(ipt_perda.value)
+        let silkCo = ipt_silkCo.value
+        let rendaLiq = 0
+
+        if(silkCo == `sim`){
+            perda /= 1.2
+            kg *= 1.3
+            let rendaBruta = kg * hectares * valorKg
+            rendaLiq =  rendaBruta - perda
+            div_msg.innerHTML += `<p style="color:green">Com a SilkCo seus resultados são: <br>
+            Renda Bruta (anual): R$${rendaBruta.toFixed(2)} <br>
+            Perdas: ${perda.toFixed(1)} kg <br>
+            Quilos: ${kg.toFixed(1)} kg <br>
+            Renda Liq (anual): R$${rendaLiq.toFixed(2)}<p>`
+        } else {
+            let rendaBruta = kg * hectares * valorKg
+            rendaLiq = rendaBruta - perda
+            div_msg.innerHTML += `<p style="color:red">Sem a SilkCo seus resultados são: <br>
+            Renda Bruta (anual): R$${rendaBruta.toFixed(2)} <br>
+            Perdas: ${perda.toFixed(1)} kg <br>
+            Quilos: ${kg.toFixed(1)} kg <br>
+            Renda Liq (anual): R$${rendaLiq.toFixed(2)}<p>`
+        }
+}
+</script>
