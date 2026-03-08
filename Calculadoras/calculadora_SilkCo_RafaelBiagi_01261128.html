@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador Financeiro SilkCO</title>
+</head>
+
+<body>
+
+<h1>Simulador Financeiro SilkCO</h1>
+<h3>Simule o impacto das perdas causadas por variações de temperatura e umidade</h3>
+
+Hectares disponíveis para produção de amoreiras:
+<input type="text" id="inp_hectares"> <br><br>
+
+Produção média por hectare (kg de casulos/ano):
+<input type="text" id="inp_qtdCasulo"> <br><br>
+
+Preço médio do kg do casulo (R$):
+<input type="text" id="inp_precoCasulo"> <br><br>
+
+Tempo de simulação (anos):
+<input type="text" id="inp_tempoSimulacao"> <br><br>
+
+<button onclick="simulacaoConservadora()">Simulação Conservadora (15% perda)</button>
+<button onclick="simulacaoCritica()">Simulação Crítica (30% perda)</button>
+
+<br><br>
+
+<div id="mensagem"></div>
+
+<script>
+
+function simulacaoConservadora(){
+
+let hectare = Number(inp_hectares.value);
+let qtdCasulo = Number(inp_qtdCasulo.value);
+let preco = Number(inp_precoCasulo.value);
+let tempo = Number(inp_tempoSimulacao.value);
+
+let producaoAnual = hectare * qtdCasulo;
+let producaoTotal = producaoAnual * tempo;
+
+let faturamentoAnual = producaoAnual * preco;
+let faturamentoTotal = producaoTotal * preco;
+
+let perda = faturamentoTotal * 0.15;
+
+let faturamentoComSilkCO = faturamentoTotal - perda;
+
+mensagem.innerHTML = `
+<h2>Resultado da Simulação (Cenário Conservador)</h2>
+
+Produção anual estimada: <b>${producaoAnual} kg</b> <br>
+Produção total no período: <b>${producaoTotal} kg</b> <br><br>
+
+Faturamento anual estimado: <b>R$ ${faturamentoAnual.toFixed(2)}</b> <br>
+Faturamento total no período: <b>R$ ${faturamentoTotal.toFixed(2)}</b> <br><br>
+
+<span style="color:red">
+Perda estimada sem monitoramento (15%): <b>R$ ${perda.toFixed(2)}</b>
+</span>
+<br><br>
+
+<span style="color:green">
+Valor protegido com SilkCO: <b>R$ ${(perda).toFixed(2)}</b>
+</span>
+<br>
+
+Faturamento final preservado: <b>R$ ${faturamentoComSilkCO.toFixed(2)}</b>
+`
+}
+
+function simulacaoCritica(){
+
+let hectare = Number(inp_hectares.value);
+let qtdCasulo = Number(inp_qtdCasulo.value);
+let preco = Number(inp_precoCasulo.value);
+let tempo = Number(inp_tempoSimulacao.value);
+
+let producaoAnual = hectare * qtdCasulo;
+let producaoTotal = producaoAnual * tempo;
+
+let faturamentoAnual = producaoAnual * preco;
+let faturamentoTotal = producaoTotal * preco;
+
+let perda = faturamentoTotal * 0.30;
+
+let faturamentoComSilkCO = faturamentoTotal - perda;
+
+mensagem.innerHTML = `
+<h2>Resultado da Simulação (Cenário Crítico)</h2>
+
+Produção anual estimada: <b>${producaoAnual} kg</b> <br>
+Produção total no período: <b>${producaoTotal} kg</b> <br><br>
+
+Faturamento anual estimado: <b>R$ ${faturamentoAnual.toFixed(2)}</b> <br>
+Faturamento total no período: <b>R$ ${faturamentoTotal.toFixed(2)}</b> <br><br>
+
+<span style="color:red">
+Perda estimada sem monitoramento (30%): <b>R$ ${perda.toFixed(2)}</b>
+</span>
+<br><br>
+
+<span style="color:green">
+Valor protegido com SilkCO: <b>R$ ${(perda).toFixed(2)}</b>
+</span>
+<br>
+
+Faturamento final preservado: <b>R$ ${faturamentoComSilkCO.toFixed(2)}</b>
+`
+}
+
+</script>
+
+</body>
+</html>
