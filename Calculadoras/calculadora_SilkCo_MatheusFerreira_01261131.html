@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador financeiro</title>
+</head>
+<body>
+    <h1>Simulador financeiro</h1> <br><br>
+    <label for="ipt_qtd_producao"><h2>Quanto sua empresa produz?</h2></label>
+    <h4>R$</h4><input type="text" id="ipt_qtd_producao">
+    <label for="ipt_preco"><h2>Quanto é o custo por cada kilo de seda?</h2></label>
+    <h4>R$</h4><input type="text" id="ipt_preco"> <br><br>
+
+    <button onclick="calc()">Calcular Agora!</button> <br><br>
+    <div id="div_erro"></div>
+    <div id="div_com_silk"></div>
+    <div id="div_sem_silk"></div>
+
+</body>
+</html>
+<script>
+    function calc(){
+        
+        let qtdProducao = Number(ipt_qtd_producao.value);
+        let precoKilo = Number(ipt_preco.value);
+
+        if(qtdProducao > 0 && precoKilo > 0){
+            let dinheiroBruto = (qtdProducao * precoKilo)
+            let precoSemSistema = (dinheiroBruto * 0.30);
+            let precoComSistema = (dinheiroBruto * 0.05);
+
+            let dinheiroComSistema = (dinheiroBruto - precoComSistema);
+            let dinheiroSemSistema = (dinheiroBruto - precoSemSistema);
+
+            div_com_silk.innerHTML = `<p style="color: green"><b>Com a SILK CO </b><br>
+            Você tem a perda aproximada de apenas 5% que é R$${precoComSistema.toFixed(2)} <br>
+            E tem um lucro total de <b>R$${dinheiroComSistema.toFixed(2)} </b> </p> <br>`;
+
+            div_sem_silk.innerHTML = `<p style="color: red"><b>Sem a SILK CO </b><br>
+            Você tem a perda aproximada de 30% que é R$${precoSemSistema.toFixed(2)} <br>
+            E tem um lucro total de <b>R$${dinheiroSemSistema.toFixed(2)} </b></p><br>`;
+        }else{
+            div_com_silk.innerHTML = "";
+            div_sem_silk.innerHTML = "";
+            div_erro.innerHTML = `<p style="color: red;"><b>Insira números maiores que 0 para a realização do calculo!</b></p>`;
+        }
+    }
+
+</script>
