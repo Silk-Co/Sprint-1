@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador SilkCO</title>
+</head>
+<body>
+    <h1>Simulador Financeiro</h1>
+
+    Quantidade de ovos comprados por safra(g): <input type="text" id="inp_qtdGrama"><br><br>
+    Valor do casulo por Kg: <input type="text" id="inp_valor"><br><br>
+    Tempo de simulação(anos): <input type="text" id="inp_tempo"><br><br>
+
+    <button onclick="but_simular()">Simular</button><br><br>
+
+    <div id="div_mensagem"></div> 
+
+     
+</body>
+</html>
+<script>
+
+    function but_simular(){
+
+        let qtdGramaAnual = Number(inp_qtdGrama.value) * 9;
+        let valorCasulo = Number(inp_valor.value);
+        let tempo = Number(inp_tempo.value); // declarei o tempo de simulação --Lucas
+
+        let casuloPorGrama = qtdGramaAnual * 1500; // MÉDIA 20-40
+        // quantos casulos tem por g de ovos (1g de ovo  = 1500) - Departamento de Entomologia -UFLA
+
+        let kgCasulo = casuloPorGrama / 500; // quilos de casulos produzidos (1kg de casulos = 500 casulos) - wildfibres.co.uk
+        
+        let prejuizoGeral = kgCasulo * 0.40; // casulos perdidos no geral (40%) - International Journal of Advanced Biochemistry Research 2025
+        
+        let prejuizoEspecifico = prejuizoGeral * 0.70; // casulos perdidos por doenças (70% de 40%) - International Journal of Advanced Biochemistry Research 2025
+        
+        let totalAnual = (kgCasulo-prejuizoGeral) * valorCasulo; // valor dos casulos restantes 
+        
+        let totalAnualSilk = (kgCasulo - (prejuizoGeral - prejuizoEspecifico)) * valorCasulo; // valor com sensor
+        
+        let diferença = totalAnualSilk - totalAnual;
+
+        
+
+        div_mensagem.innerHTML = `
+        <b>SEM A SILK COMPANY:</b> <br>
+        Faturamento por safra é em média: R$${totalAnual/9}<br>
+        Total anual é: R$${totalAnual}<br>
+        Total no fim da simulação é: R$${totalAnual * tempo}<br><br>
+        
+        <b>COM A SILK COMPANY:</b> <br>
+        Faturamento por safra é em média: R$${totalAnualSilk/9}<br>
+        Total anual é: R$${totalAnualSilk}<br>
+        Total no fim da simulação é: R$${totalAnualSilk * tempo} <br><br>
+
+        <span style="color: green;"> Diferença de R$${diferença} sem o nosso produto.</span>
+        ` 
+    }
+</script>
