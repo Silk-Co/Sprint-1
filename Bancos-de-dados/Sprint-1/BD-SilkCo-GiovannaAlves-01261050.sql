@@ -1,0 +1,30 @@
+CREATE DATABASE silkCo;
+
+USE silkCo;
+
+CREATE TABLE empresa(
+idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+nomeEmpresa VARCHAR(60) NOT NULL,
+endereco VARCHAR(255) NOT NULL,
+cnpj VARCHAR(14) UNIQUE
+);
+
+CREATE TABLE cliente(
+idCliente INT PRIMARY KEY AUTO_INCREMENT,
+nomeCliente VARCHAR(60) NOT NULL,
+email VARCHAR(100)NOT NULL UNIQUE,
+senha VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE sensor(
+idSensor INT PRIMARY KEY AUTO_INCREMENT,
+statusSensor VARCHAR(20),
+	CONSTRAINT chStatusSensor 
+    CHECK (statusSensor IN ('Ativo', 'Inativo', 'Em manutenção'))
+);
+
+CREATE TABLE registro(
+idRegistro INT PRIMARY KEY AUTO_INCREMENT,
+temperatura DECIMAL(5,2) NOT NULL,
+umidade DECIMAL(5,2) NOT NULL
+);
