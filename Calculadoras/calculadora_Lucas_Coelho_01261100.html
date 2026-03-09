@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+</head>
+<body>
+    <h1>Simulador Financeiro SilkCO</h1>
+
+    Digite os hectares disponíeis para a produção <input type="text" id="ipt_hectares"> <br> <br>
+    Digite a produção por ano (kg/ano) <input type="text" id="ipt_kgs"> <br> <br>
+    Digite o preço do kg <input type="text" id="ipt_preco_kg"> <br> <br>
+    Digite os anos para simulação <input type="text" id="ipt_anos"> <br> <br>
+
+    <button onclick="calcular()">Calcular</button> <br> <br>
+
+    <div id="div_msg"></div>
+</body>
+</html>
+<script>
+    function calcular(){
+        let hectares = Number(ipt_hectares.value); // Obtém o valor do campo de input com id "ipt_hectares" e converte para número
+        let kgs = Number(ipt_kgs.value); // Obtém o valor do campo de input com id "ipt_kgs" e converte para número
+        let precoKg = Number(ipt_preco_kg.value); // Obtém o valor do campo de input com id "ipt_preco_kg" e converte para número
+        let anos = Number(ipt_anos.value); // Obtém o valor do campo de input com id "ipt_anos" e converte para número
+
+        let precoTotal = hectares * kgs * anos; // Calcula a quantidade total de produto (hectares * kgs por hectare * anos)
+
+        let totalSemPerdas = precoTotal * precoKg; // Calcula o valor total sem perdas (quantidade total * preço por kg)
+
+        let perdaConservadora = totalSemPerdas + (totalSemPerdas * 0.15); // Calcula o valor considerando uma perda conservadora de 15% (valor total + 15%)
+
+        let perdaCritica = totalSemPerdas + (totalSemPerdas * 0.30); // Calcula o valor considerando uma perda crítica de 30% (valor total + 30%)
+
+        let investimento = 3000; // Define o valor fixo do investimento na SilkCO (R$ 3000)
+
+        let totalSemPerdasSilkCo = totalSemPerdas + investimento; // Calcula o total com SilkCO (valor sem perdas + investimento)
+
+        let ganhoConservador = perdaConservadora - investimento; // Calcula o ganho no cenário conservador (perda conservadora - investimento)
+
+        let ganhoCritico = perdaCritica - investimento; // Calcula o ganho no cenário crítico (perda crítica - investimento)
+
+        // Mensagem q será exibida, após simulação
+        div_msg.innerHTML = `
+        <h2>Resultado Simulação</h2> 
+
+        Preço Total sem perdas: <br> ${totalSemPerdas.toFixed(2)} <br> <br> 
+
+        <p style="color: red;">Perda Conservador (15%): <br> <b>${perdaConservadora.toFixed(2)}</b> <br> 
+
+            Perda Crítica: <br> <b>${perdaCritica.toFixed(2)}</b></p> <br> <br> 
+
+            Total com SilkCO: <br> ${totalSemPerdasSilkCo} <br> <br> 
+
+            <p style="color: green;">Ganho Conservador: <br> <b>${ganhoConservador.toFixed(2)}</b> <br> 
+
+            Ganho Crítico: <br> <b>${ganhoCritico.toFixed(2)}</b></p>`;
+
+    };
+</script>
